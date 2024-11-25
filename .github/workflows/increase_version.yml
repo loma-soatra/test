@@ -11,16 +11,12 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-        with:
-          tag_name: ${{ 'ff' }}
-          release_name: Release ${{ 'ff' }}
-          body:
-          draft: false
-          prerelease: false
+      - uses: actions/checkout@v3
+
+      - name: Create tag
+
+        run: |
+
+          git tag -a ${{ github.ref }} -m "Release ${{ github.ref }}" 
+
+          git push origin --tags
