@@ -21,3 +21,4 @@
 git tag | xargs git tag -d
           git push origin --tags
 --------------
+git tag | xargs git tag -d
