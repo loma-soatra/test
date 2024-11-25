@@ -21,19 +21,18 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
 
           package_version=$(node -p "require('./package.json').version")
+          new_version=v$(echo "${package_version:0:-2} + 0.1" | bc)
 
           if [[ $package_version =~ .[0-8]. ]]; then \
-            npm version minor -m "increase minor"; \
+            npm version minor -m "$new_version"; \
           else \
-            npm version major -m "increase major"; \
+            npm version major -m "$new_version"; \
           fi;
 
-          v_version=v${package_version:0:-2}
-
           git tag | xargs git tag -d
-          git tag $v_version
+          git tag $new_version
           git push origin --follow-tags
-          echo "version=${v_version}" >> "$GITHUB_OUTPUT"
+          echo "version=${new_version}" >> "$GITHUB_OUTPUT"
 
       - name: create release
         id: create_release
