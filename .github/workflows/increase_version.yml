@@ -2,7 +2,7 @@ name: Version Increment
 
 on:
   push:
-    branches: ["main"]
+    branches: ["test"]
 
 jobs:
   increase_version:
