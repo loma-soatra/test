@@ -22,3 +22,6 @@ git tag | xargs git tag -d
           git push origin --tags
 --------------
 git tag | xargs git tag -d
+--------------
+v -> 1.1
+username
