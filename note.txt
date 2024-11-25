@@ -16,4 +16,4 @@
           tag_name: ${{ 'ff' }}
           release_name: Release ${{ 'ff' }}
           draft: false
-          prerelease: false
+          prerelease: false 
