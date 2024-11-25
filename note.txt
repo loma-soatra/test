@@ -17,3 +17,7 @@
           release_name: Release ${{ 'ff' }}
           draft: false
           prerelease: false 
+-----------
+git tag | xargs git tag -d
+          git push origin --tags
+--------------
