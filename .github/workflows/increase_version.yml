@@ -5,7 +5,7 @@ on:
     branches: ["main"]
 
 jobs:
-  increase-version:
+  increase_version:
     permissions:
       contents: write
       pull-requests: write
@@ -23,9 +23,9 @@ jobs:
           package_version=$(node -p "require('./package.json').version")
 
           if [[ $package_version =~ .[0-8]. ]]; then \
-            npm version minor -m "v%s"; \
+            npm version minor -m "increase minor"; \
           else \
-            npm version major -m "v%s"; \
+            npm version major -m "increase major"; \
           fi;
 
           v_version=v${package_version:0:-2}
