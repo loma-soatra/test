@@ -16,7 +16,7 @@ jobs:
           git config --global user.name github-actions[bot]
           git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
           npm version minor -m "v%s"
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION=v$(node -p "require('./package.json').version")
           git tag -a ${VERSION} -m ${VERSION}
           git push origin --follow-tags
           git push origin --tags
@@ -29,6 +29,6 @@ jobs:
         with:
           tag_name: ${{ steps.create_tag.outputs.version }}
           release_name: ${{ steps.create_tag.outputs.version }}
-          body: changes
+          body: auto created
           draft: false
           prerelease: false
