@@ -20,6 +20,7 @@ jobs:
 
           VERSION=v$(node -p "require('./package.json').version")
 
+          git tag | xargs git tag -d
           git tag ${VERSION}
           git push origin --follow-tags
 
