@@ -9,26 +9,26 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Create Tag
-        id: create_tag
-        run: |
-          git config --global user.name github-actions[bot]
-          git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
-          npm version minor -m "v%s"
-          VERSION=v$(node -p "require('./package.json').version")
-          git tag | xargs git tag -d
-          git tag -a ${VERSION} -m ${VERSION}
-          git push origin --follow-tags
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+      # - uses: actions/checkout@v3
+      # - name: Create Tag
+      #   id: create_tag
+      #   run: |
+      #     git config --global user.name github-actions[bot]
+      #     git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+      #     npm version minor -m "v%s"
+      #     VERSION=v$(node -p "require('./package.json').version")
+      #     git tag | xargs git tag -d
+      #     git tag -a ${VERSION} -m ${VERSION}
+      #     git push origin --follow-tags
+      #     echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
       - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.create_tag.outputs.version }}
-          release_name: ${{ steps.create_tag.outputs.version }}
+          tag_name: ${{ 'steps.create_tag.outputs.version' }}
+          release_name: ${{ 'steps.create_tag.outputs.version' }}
           body: auto created
           draft: false
           prerelease: false
