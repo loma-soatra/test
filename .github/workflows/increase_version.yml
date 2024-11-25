@@ -2,6 +2,8 @@ name: Increase Version
 on:
   push:
     branches: ["main"]
+    tags:
+      - 'v*'
 jobs:
   version:
     runs-on: ubuntu-latest
