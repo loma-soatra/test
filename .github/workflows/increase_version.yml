@@ -18,7 +18,7 @@ jobs:
           npm version minor -m "v%s"
           VERSION=v$(node -p "require('./package.json').version")
           git tag -a ${VERSION} -m ${VERSION}
-          git push origin --follow-tags
+          
           git push origin --tags
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
 
