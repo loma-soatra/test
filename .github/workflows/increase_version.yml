@@ -1,13 +1,17 @@
-name: Increase Version
+name: Version Increment
+
 on:
   push:
     branches: ["main"]
+
 jobs:
   increase-version:
     permissions:
       contents: write
       pull-requests: write
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: create tag
@@ -15,12 +19,21 @@ jobs:
         run: |
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
-          npm version minor -m "v%s"
-          VERSION=v$(node -p "require('./package.json').version")
+
+          package_version=$(node -p "require('./package.json').version")
+
+          if [[ $package_version =~ .[0-8]. ]]; then \
+            npm version minor -m "v%s"; \
+          else \
+            npm version major -m "v%s"; \
+          fi;
+
+          v_version=v${package_version:0:-2}
+
           git tag | xargs git tag -d
-          git tag ${VERSION}
+          git tag $v_version
           git push origin --follow-tags
-          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "version=${v_version}" >> "$GITHUB_OUTPUT"
 
       - name: create release
         id: create_release
@@ -30,6 +43,6 @@ jobs:
         with:
           tag_name: ${{ steps.create_tag.outputs.version }}
           release_name: ${{ steps.create_tag.outputs.version }}
-          body: auto created
+          body: Auto created by github action.
           draft: false
           prerelease: false
