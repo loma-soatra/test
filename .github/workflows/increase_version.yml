@@ -1,7 +1,7 @@
-name: Increase Verson
+name: Increase Version
 on:
   push:
-    branches: [ "main"]
+    branches: ["main"]
 jobs:
   version:
     runs-on: ubuntu-latest
@@ -13,4 +13,3 @@ jobs:
       - run: VERSION=$(node -p "require('./package.json').version")
       - run: git tag ${VERSION}
       - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --follow-tags
-      - run: git push "https://$GITHUB_ACTOR:${{ secrets.ACCESS_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" --tags
