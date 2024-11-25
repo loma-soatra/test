@@ -42,6 +42,6 @@ jobs:
         with:
           tag_name: ${{ steps.create_tag.outputs.version }}
           release_name: ${{ steps.create_tag.outputs.version }}
-          body: Auto created by github action.
+          body:
           draft: false
           prerelease: false
