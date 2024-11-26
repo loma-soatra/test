@@ -20,20 +20,14 @@ jobs:
         run: |
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
-
-          package_version=$(node -p "require('./package.json').version")
-          new_version=v$(echo "${package_version:0:-2} + 0.1" | bc)
-
-          if [[ $package_version =~ .[0-8]. ]]; then \
-            npm version minor -m "$new_version"; \
-          else \
-            npm version major -m "$new_version"; \
-          fi;
-
+          
+          version=v$(node -p "const versionSlice = require('./package.json').version.split('.'); versionSlice[0] + '.' + (+versionSlice[1] + 1) + '.' + versionSlice[2];")
+          npm version minor -m "$version";
+          
           git tag | xargs git tag -d
-          git tag -a $new_version -m "${{ github.ref_name }}"
+          git tag -a $version -m "${{ github.ref_name }}"
           git push origin --follow-tags
-          echo "version=${new_version}" >> "$GITHUB_OUTPUT"
+          echo "version=${version}" >> "$GITHUB_OUTPUT"
 
       - name: Create release
         uses: actions/create-release@v1
