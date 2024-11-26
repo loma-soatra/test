@@ -17,7 +17,7 @@ jobs:
       - name: Create tag
         id: create_tag
         run: |
-          git config user.email "$GITHUB_USER_EMAIL"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
           git config user.name "$GITHUB_ACTOR"
 
           package_version=$(node -p "require('./package.json').version")
